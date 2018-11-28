@@ -9,4 +9,4 @@
 		2. : cd AsTuxEmacs/
 			3. : mv .emacs.d  /home/user/  
 			(移动到用户的home下。例如我的，/home/astux/.emacs  /home/astux/.emacs.d/)
-#### 现在开始自己魔改或者给我提些小意见咯。####
+#### 现在开始自己魔改或者给我提些小意见咯
