@@ -49,12 +49,18 @@
 (doom-modeline-init)
 (setq doom-modeline-buffer-file-name-style 'file-name)
 ;;----------Fonts
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (require 'all-the-icons)
-(setq all-the-icons-color-icons nil)
-(setq inhibit-compacting-font-caches t)
+;(setq all-the-icons-color-icons nil)
+;(setq inhibit-compacting-font-caches t)
 (setq neo-theme 'icons)
+(add-to-list 'load-path "/home/w/.emacs.d/neotree")
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
 
 ;;-----------------------Gui
+(setq frame-title-format '("AsTux@Emacs" buffer-file-name))
 (setq-default c-basic-offset 4)
 (setq initial-scratch-message  "Hack World")
 (tool-bar-mode 0) ;;关闭工具栏
@@ -65,6 +71,7 @@
 (set-frame-height (selected-frame) 30)
 ;;(set-frame-parameter nil 'alpha 90) ;透明
 (set-language-environment "UTF-8") ;;UTF-8
+(set-language-environment 'Chinese-GB)
 (setenv "LC_ALL" "en_US.UTF-8")
 (setq make-backup-files nil) ;;关闭备份
 (scroll-bar-mode 0) ;;关闭文件滑动控件
@@ -74,10 +81,12 @@
 (setq inhibit-splash-screen 1) ;; 关闭启动帮助画面
 (defun open-init-file()
   (interactive)
-  (find-file "~/.emacs")) ;; 快速打开配置文件
+  (find-file "/home/w/.emacs.d/init.el")) ;; 快速打开配置文件
 (global-set-key (kbd "<f2>") 'open-init-file) ;; 这一行代码，将函数 open-init-file 绑定到 <f2> 键上
 
-;;--------------------------Company补全
+;;--------------------------Company补全&美化
+(require 'company-box)
+(add-hook 'company-mode-hook 'company-box-mode)
 (add-to-list 'load-path "～/.emacs.d/company-mode")
 (autoload 'company-mode "company" nil t)
 (setq company-idle-delay 0.2;菜单延迟
@@ -134,25 +143,17 @@
                     '(:propertize vc-mode face (:inherit font-lock-keyword-face :weight bold))
                     " %m " ))
 
-;;Logo
-;; hack gnus
-  (require 'gnus-group)
-  (defun gnus-group-startup-message (&optional x y)
-    "Insert startup message in current buffer."
-    ;; Insert the message.
-    (erase-buffer)
-    (when (display-graphic-p)
-      (let* ((image (create-image "/home/w/.emacs.d/png/emacs.png"))
-             (size (image-size image)))
-        (insert-char ?\n (max 0 (round (- (window-height)
-                                          (or y (cdr size)) 1) 2)))
-        (insert-char ?\  (max 0 (round (- (window-width)
-                                          (or x (car size))) 2)))
-        (insert-image image)
-        (insert "\n")
-        (insert-char ?\  (max 0 (round (- (window-width)
-                                          (or x (car size))) 2)))
-        (insert "Amadeus system is loading...")
-        (goto-char (point-min))
-        ))
-    (set-buffer-modified-p t))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (tabbar-ruler solarized-theme helm gruvbox-theme go-mode elpy doom-modeline company-box autopair all-the-icons-dired 2048-game))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
